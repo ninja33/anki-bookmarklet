@@ -1,7 +1,7 @@
 
 Bookmarklet Sourcecode:
 ```
-javascript:(function(){var deckName='Default';var typeName='Basic';var fieldWord='Front';var fieldSentence='Back';if(window.myBookmarklet!==undefined){myBookmarklet();}else{var s=document.createElement("script");s.type="text/javascript",s.src="https://rawgit.com/ninja33/anki-bookmarklet/master/abkl_ankiconnect.js?bust="+new Date().getTime(),document.body.appendChild(s)}})();
+javascript:(function(){deckName='Default';typeName='Basic';fieldWord='Front';fieldSentence='Back';if(window.myBookmarklet!==undefined){myBookmarklet();}else{var s=document.createElement("script");s.type="text/javascript",s.src="https://rawgit.com/ninja33/anki-bookmarklet/master/abkl_ankiconnect.js?bust="+new Date().getTime(),document.body.appendChild(s)}})();
 ```
 
 修改上述书签中相应字符串
