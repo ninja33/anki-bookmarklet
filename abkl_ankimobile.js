@@ -1,8 +1,5 @@
-let profile = encodeURIComponent('User 1');
-//let deckName = encodeURIComponent('Antimoon');
-//let typeName = encodeURIComponent('Antimoon');
-//let fieldWord = encodeURIComponent('expression');
-//let fieldSentence = encodeURIComponent('sentence');
+var profile = encodeURIComponent('User 1');
+
 let blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
@@ -16,7 +13,7 @@ function getBlock(node, deep) {
 }
 
 // autocut function
-function autocutSentenceIfNeeded(word, sentence) {
+function cutSentence(word, sentence) {
     var autocut = true;
     var sentenceNum = 3;
 
@@ -57,7 +54,7 @@ function getSentence(word, elem) {
         wordContent = elem.innerText;
     }
 
-    return autocutSentenceIfNeeded(word, wordContent);
+    return cutSentence(word, wordContent);
 }
 
 function changeAnkiLink(word, node){
@@ -77,6 +74,11 @@ function changeAnkiLink(word, node){
         return;
     }
 
+    deckName = encodeURIComponent(deckName);
+    typeName = encodeURIComponent(typeName);
+    fieldWord = encodeURIComponent(fieldWord);
+    fieldSentence = encodeURIComponent(fieldSentence);
+    
     var expression = encodeURIComponent(word);
     var sentence = encodeURIComponent(getSentence(word, node));
 
