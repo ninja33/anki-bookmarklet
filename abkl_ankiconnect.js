@@ -108,7 +108,7 @@ function initMyBookmarklet() {
         elemDiv.innerHTML = "\
             <div id='ankiframe'>\
                 <div id='ankiframe_veil' style=''>\
-                    <img id='ankibutton' src=\"https://rawgit.com/ninja33/anki-bookmarklet/master/abkl_plus_32.png\">\
+                    <img id='ankibutton' src=\"https://raw.githubusercontent.com/ninja33/anki-bookmarklet/master/akbl_plus_32.png\">\
                 </div>\
                 <style type='text/css'>\
                     #ankiframe { float: right; }\
