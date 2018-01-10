@@ -77,7 +77,7 @@ function clickAnkibutton(){
     var selection = window.getSelection();
     var word = (selection.toString() || '').trim();
     if (selection.rangeCount > 0)
-        var node = selection.getRangeAt(0).commonAncestorContainer 
+        var node = selection.getRangeAt(0).commonAncestorContainer;
 
     if (!word) {
         alert('No word selected!');
