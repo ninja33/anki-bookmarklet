@@ -64,7 +64,6 @@ function changeAnkiLink(){
         var node = selection.getRangeAt(0).commonAncestorContainer;
 
     if (!word) {
-        alert('No word selected!');
         return;
     }
 
