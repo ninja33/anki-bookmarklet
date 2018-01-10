@@ -57,8 +57,14 @@ function getSentence(word, elem) {
     return cutSentence(word, wordContent);
 }
 
-function changeAnkiLink(word, node){
+function changeAnkiLink(){
+    var selection = window.getSelection();
+    var word = (selection.toString() || '').trim();
+    if (selection.rangeCount > 0)
+        var node = selection.getRangeAt(0).commonAncestorContainer;
+
     if (!word) {
+        alert('No word selected!');
         return;
     }
 
@@ -89,10 +95,7 @@ function changeAnkiLink(word, node){
 
 function initMyBookmarklet() {
     document.addEventListener('selectionchange', function(event) {
-        var selection = window.getSelection();
-        var word = (selection.toString() || '').trim();
-        var node = selection.getRangeAt(0).commonAncestorContainer 
-        changeAnkiLink(word, node);
+        changeAnkiLink();
     },false);
 
 
