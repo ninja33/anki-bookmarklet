@@ -79,15 +79,16 @@ function changeAnkiLink(){
         return;
     }
 
-    deckName = encodeURIComponent(deckName);
-    typeName = encodeURIComponent(typeName);
-    fieldWord = encodeURIComponent(fieldWord);
-    fieldSentence = encodeURIComponent(fieldSentence);
+    profile = encodeURIComponent(profile);
+    deck = encodeURIComponent(deck);
+    type = encodeURIComponent(type);
+    wordfield = encodeURIComponent(wordfield);
+    sentencefield = encodeURIComponent(sentencefield);
     
     var expression = encodeURIComponent(word);
     var sentence = encodeURIComponent(getSentence(word, node));
 
-    var link = `anki://x-callback-url/addnote?profile=${profile}&type=${typeName}&deck=${deckName}&fld${fieldWord}=${expression}&fld${fieldSentence}=${sentence}&dupes=1`;
+    var link = `anki://x-callback-url/addnote?profile=${profile}&type=${type}&deck=${deck}&fld${wordfield}=${expression}&fld${sentencefield}=${sentence}&dupes=1`;
     document.getElementById("ankilink").href = link; 
     //alert(link);
 }
