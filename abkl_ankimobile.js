@@ -1,5 +1,3 @@
-var profile = encodeURIComponent('User 1');
-
 let blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
@@ -79,11 +77,11 @@ function changeAnkiLink(){
         return;
     }
 
-    profile = encodeURIComponent(profile);
-    deck = encodeURIComponent(deck);
-    type = encodeURIComponent(type);
-    wordfield = encodeURIComponent(wordfield);
-    sentencefield = encodeURIComponent(sentencefield);
+    var profile = encodeURIComponent(abkl_profile);
+    var deck = encodeURIComponent(abkl_deck);
+    var type = encodeURIComponent(abkl_type);
+    var wordfield = encodeURIComponent(abkl_wordfield);
+    var sentencefield = encodeURIComponent(abkl_sentencefield);
     
     var expression = encodeURIComponent(word);
     var sentence = encodeURIComponent(getSentence(word, node));
