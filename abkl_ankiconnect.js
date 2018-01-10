@@ -1,9 +1,3 @@
-//let profile = encodeURIComponent('User 1');
-//let deckName = 'Antimoon';
-//let typeName = 'Antimoon';
-//let fieldWord = 'expression';
-//let fieldSentence = 'sentence';
-
 let blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
@@ -62,10 +56,10 @@ function getSentence(word, elem) {
 
 function addNote(word, sentence){
     var note = {fields: {}, tags:['chrome']};
-    note.deckName  = deckName;
-    note.modelName = typeName;
-    note.fields[fieldWord] = word;
-    note.fields[fieldSentence] = sentence;
+    note.deckName  = abkl_deck;
+    note.modelName = abkl_type;
+    note.fields[abkl_wordfield] = word;
+    note.fields[abkl_sentencefield] = sentence;
 
     var newnote = {action:'addNote',params: {note}};
     var xhr = new XMLHttpRequest();
