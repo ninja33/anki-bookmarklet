@@ -1,8 +1,8 @@
 //let profile = encodeURIComponent('User 1');
-let deckName = 'Antimoon';
-let typeName = 'Antimoon';
-let fieldWord = 'expression';
-let fieldSentence = 'sentence';
+//let deckName = 'Antimoon';
+//let typeName = 'Antimoon';
+//let fieldWord = 'expression';
+//let fieldSentence = 'sentence';
 
 let blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
