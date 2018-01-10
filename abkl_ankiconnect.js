@@ -70,7 +70,7 @@ function addNote(word, sentence){
     var newnote = {action:'addNote',params: {note}};
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://127.0.0.1:8765');
-    xhr.send(JSON.stringify({action, params}));
+    xhr.send(JSON.stringify(newnotw));
 }
 
 function clickAnkibutton(){
