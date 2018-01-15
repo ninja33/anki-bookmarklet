@@ -61,7 +61,7 @@ class Popup {
         }
 
         this.popup = document.createElement('iframe');
-        this.popup.id = 'yomichan-popup';
+        this.popup.id = 'abkl-popup';
         this.popup.addEventListener('mousedown', (e) => e.stopPropagation());
         this.popup.addEventListener('scroll', (e) => e.stopPropagation());
 

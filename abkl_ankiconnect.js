@@ -121,7 +121,7 @@ function getDefinition(word) {
         var url = base + param;
 
         jsonp(url, function(data) {
-            if (!data.basic.explains) {
+            if (!data.basic) {
                 reject(null);
             } else {
                 var def = '';
@@ -154,7 +154,6 @@ function onMouseUp(e) {
         var node = selection.getRangeAt(0).commonAncestorContainer;
 
     if (!word) {
-        alert('No word selected!');
         return;
     }
 
@@ -174,13 +173,20 @@ function onMouseUp(e) {
     getDefinition(word).then(definition=>{
         var RangeRect = document.caretRangeFromPoint(e.clientX, e.clientY).getBoundingClientRect();
         var content = `\
-            <div>\
-                <p>${word}</p>\
-                <hr>\
-                <p>${sentence}</p>\
-                <br>\
-                <p>${definition}</p>\
-            </div>`;
+            <html lang="zh-CN">\
+                <head><meta charset="UTF-8"><title></title>\
+                    <link rel="stylesheet" href="util/frame.css">\
+                </head>\
+                <body>\
+                <div class="abkl-content">\
+                    <div class="abkl-sect abkl-word">${word}</div>\
+                    <div class="abkl-sect abkl-sent">${sentence}</div>\
+                    <div class="abkl-sect abkl-defs">${definition}</div>\
+                </div>\
+                <!--script src="frame.js"></script-->\
+                </body>\
+            </html>\
+            `;
         popup.showNextTo(RangeRect, content);
     });
 }
