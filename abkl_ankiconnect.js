@@ -3,7 +3,7 @@ const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
 const abkl_base = "https://rawgit.com/ninja33/anki-bookmarklet/master/";
 
-function initOptions() {
+function initBookmartlet() {
     if (typeof abkl_options == "undefined")
         abkl_options = {};
     
@@ -12,13 +12,23 @@ function initOptions() {
     abkl_options.word = abkl_options.word || 'expression';
     abkl_options.defs = abkl_options.defs || 'glossary';
     abkl_options.sent = abkl_options.sent || 'sentence';
-}
 
-function initPopup(){
     popup = new Popup();
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('message', onFrameMessage);
+    var elemDiv = document.createElement('div');
+    elemDiv.innerHTML = `\
+        <div id='ankiframe'>\
+            <div id='ankiframe_veil' style=''>\
+                <img id='ankibutton' src="${abkl_base}util/greenlight.gif">\
+            </div>\
+            <style type='text/css'>\
+                #ankiframe { float: right; }\
+                #ankiframe_veil { display: block; position: fixed; bottom: 5px; right: 5px; cursor: pointer; z-index: 900; }\
+            </style>\
+        </div>`;
+    document.body.appendChild(elemDiv);
 }
     
 function jsonp(url, callback) {
@@ -182,7 +192,7 @@ function onFrameMessage(e) {
     addNote(abkl_word, abkl_sentence, abkl_definition);
 }
 
-function initMyBookmarklet() {
+function loadLib() {
 
     var libs = [];
     libs.push(abkl_base + "util/md5.js");
@@ -190,12 +200,10 @@ function initMyBookmarklet() {
     libs.push(abkl_base + "common.css");
     loadjs(libs, {
         success: function() {
-
-            initOptions();
-            initPopup();
-
+            initBookmartlet();
             (window.myBookmarklet = function() {
-                //code need to run everytime when click 
+                console.log("typeof MD5 : " + typeof md5);
+                console.log("typeof Popup : " + typeof Popup);
             })();
         }
     });
@@ -208,7 +216,7 @@ function initMyBookmarklet() {
     script.src = 'https://rawgit.com/muicss/loadjs/master/dist/loadjs.min.js';
     script.onload = script.onreadystatechange = function() {
         if (!( readystate = this.readyState ) || readystate == 'loaded' || readystate == 'complete' )
-            initMyBookmarklet();
+            loadLib();
     };
     document.documentElement.childNodes[0].appendChild(script);  
 
