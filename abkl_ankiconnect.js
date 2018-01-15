@@ -1,41 +1,46 @@
-abkl_deck='Antimoon';
-abkl_type='Antimoon';
-abkl_wordfield='expression';
-abkl_definitionfield='glossary';
-abkl_sentencefield='sentence';
-
-let blockTags = ['LI', 'P', 'DIV', 'BODY'];
+const blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
 
-function sanitizeOptions(options) {
-    const defaults = {
-        deck       : 'Antimoon',
-        type       : 'Antimoon',
-        word       : 'expression',
-        definition : 'glossary',
-        sentence   : 'sentence'
-    };
-
-    for (let key in defaults) {
-        if (!(key in options)) {
-            options[key] = defaults[key];
-        }
-    }
-
-    return options;
+function initOptions() {
+    if (typeof abkl_options == "undefined")
+        abkl_options = {};
+    
+    abkl_options.deck = abkl_options.deck || 'Antimoon';
+    abkl_options.type = abkl_options.type || 'Antimoon';
+    abkl_options.word = abkl_options.word || 'expression';
+    abkl_options.defs = abkl_options.defs || 'glossary';
+    abkl_options.sent = abkl_options.sent || 'sentence';
 }
 
-function loadOptions(callback) {
-    Cookies.get("abkl_option");
-    callback();
-}
+function initPopup(){
+    popup = new Popup();
+    
+    var elemDiv = document.createElement('div');
+    elemDiv.innerHTML = "\
+        <div id='ankiframe'>\
+            <div id='ankiframe_veil' style=''>\
+                <img id='ankibutton' src=\"https://rawgit.com/ninja33/anki-bookmarklet/master/akbl_plus_32.png\">\
+            </div>\
+            <style type='text/css'>\
+                #ankiframe { float: right; }\
+                #ankiframe_veil { display: block; position: fixed; bottom: 10px; right: 10px; cursor: pointer; z-index: 900; }\
+            </style>\
+        </div>";
+    document.body.appendChild(elemDiv);
 
-function saveOptions(opts, callback) {
-    Cookies.set("abkl_option",sanitizeOptions(opts));
-    callback
+    document.getElementById("ankibutton").addEventListener('click', function(event) {
+        clickAnkibutton();
+    },false);
+    window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener('mouseup', onMouseUp);
+    
 }
-
+    
+function onMouseDown(e) {
+    popup.hide();
+}
+    
 function jsonp(url, callback) {
     var callbackName = 'jsonp_callback_' + Math.round(100000 * Math.random());
     window[callbackName] = function(data) {
@@ -101,41 +106,40 @@ function getSentence(word, elem) {
     return cutSentence(word, wordContent);
 }
 
-function getDefinition(word, sentence) {
+function getDefinition(word) {
+    return new Promise(function(resolve, reject){
+        var appSecret = 'xYLvWBzCupw3nTpUcBwG6dvjZZT2RGD6';
+        var appKey = '49557dccdded6747';
+        var salt = (new Date).getTime();
 
-    var query = word;
+        var from = 'en';
+        var to = 'zh-CHS';
+        var sign = md5(appKey + word + salt +appSecret);
 
-    var appSecret = 'xYLvWBzCupw3nTpUcBwG6dvjZZT2RGD6';
-    var appKey = '49557dccdded6747';
-    var salt = (new Date).getTime();
+        var base = 'http://openapi.youdao.com/api?'
+        var param = `q=${word}&appKey=${appKey}&salt=${salt}&from=${from}&to=${to}&sign=${sign}`;
+        var url = base + param;
 
-    var from = 'en';
-    var to = 'zh-CHS';
-    var sign = md5(appKey + query + salt +appSecret);
-
-    var base = 'http://openapi.youdao.com/api?'
-    var param = `q=${query}&appKey=${appKey}&salt=${salt}&from=${from}&to=${to}&sign=${sign}`;
-    var url = base + param;
-
-    jsonp(url, function(data) {
-        if (!data.basic.explains) {
-            return '';
-        } else {
-            var def = '';
-            for (i = 0; i < data.basic.explains.length; i++)
-                def = def + data.basic.explains[i] + '<br>';
-            addNote(word, sentence, def)
-        }
+        jsonp(url, function(data) {
+            if (!data.basic.explains) {
+                reject(null);
+            } else {
+                var def = '';
+                for (i = 0; i < data.basic.explains.length; i++)
+                    def = def + data.basic.explains[i] + '<br>';
+                resolve(def);
+            }
+        });
     });
 }
 
 function addNote(word, sentence, definition){
     var note = {fields: {}, tags:['chrome']};
-    note.deckName  = abkl_deck;
-    note.modelName = abkl_type;
-    note.fields[abkl_wordfield] = word;
-    note.fields[abkl_sentencefield] = sentence;
-    note.fields[abkl_definitionfield] = definition;
+    note.deckName  = abkl_options.deck;
+    note.modelName = abkl_options.type;
+    note.fields[abkl_options.word] = word;
+    note.fields[abkl_options.sent] = sentence;
+    note.fields[abkl_options.defs] = definition;
 
     var newnote = {action:'addNote',params: {note}};
     var xhr = new XMLHttpRequest();
@@ -143,7 +147,7 @@ function addNote(word, sentence, definition){
     xhr.send(JSON.stringify(newnote));
 }
 
-function clickAnkibutton(){
+function onMouseUp(e) {
     var selection = window.getSelection();
     var word = (selection.toString() || '').trim();
     if (selection.rangeCount > 0)
@@ -166,34 +170,35 @@ function clickAnkibutton(){
         return;
     }
 
-    var expression = word;
     var sentence = getSentence(word, node);
-    getDefinition(word, sentence)
+    getDefinition(word).then(definition=>{
+        var RangeRect = document.caretRangeFromPoint(e.clientX, e.clientY).getBoundingClientRect();
+        var content = `\
+            <div>\
+                <p>${word}</p>\
+                <hr>\
+                <p>${sentence}</p>\
+                <br>\
+                <p>${definition}</p>\
+            </div>`;
+        popup.showNextTo(RangeRect, content);
+    });
+}
+
+function clickAnkibutton(){
+        //addNote(word, sentence, definition);
 }
 
 function initMyBookmarklet() {
 
-    var base_url = "https://rawgit.com/ninja33/anki-bookmarklet/master/"
-    var md5_js = base_url + "util/md5.js"
-    var cookies_js = base_url + "util/cookies.js"
-    loadjs([md5_js, cookies_js], {
+    var base_url = "https://rawgit.com/ninja33/anki-bookmarklet/master/";
+    var md5_js = base_url + "util/md5.js";
+    var popup_js = base_url + "util/popup.js";
+    loadjs([md5_js, popup_js], {
         success: function() {
-            var elemDiv = document.createElement('div');
-            elemDiv.innerHTML = "\
-                <div id='ankiframe'>\
-                    <div id='ankiframe_veil' style=''>\
-                        <img id='ankibutton' src=\"https://raw.githubusercontent.com/ninja33/anki-bookmarklet/master/akbl_plus_32.png\">\
-                    </div>\
-                    <style type='text/css'>\
-                        #ankiframe { float: right; }\
-                        #ankiframe_veil { display: block; position: fixed; bottom: 10px; right: 10px; cursor: pointer; z-index: 900; }\
-                    </style>\
-                </div>";
-            document.body.appendChild(elemDiv);
 
-            document.getElementById("ankibutton").addEventListener('click', function(event) {
-                clickAnkibutton();
-            },false);
+            initOptions();
+            initPopup();
 
             (window.myBookmarklet = function() {
                 //code need to run everytime when click 

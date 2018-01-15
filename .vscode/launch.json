@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch index.html (disable sourcemaps)",
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
+            "sourceMaps": false,
+            "file": "${workspaceFolder}/index.html"
+        },
     ]
 }
