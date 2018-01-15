@@ -1,6 +1,7 @@
 const blockTags = ['LI', 'P', 'DIV', 'BODY'];
 const enReg = /^[^\u4e00-\u9fa5]+$/i;
 const numReg = /\d/;
+const abkl_base = "https://rawgit.com/ninja33/anki-bookmarklet/master/";
 
 function initOptions() {
     if (typeof abkl_options == "undefined")
@@ -15,30 +16,9 @@ function initOptions() {
 
 function initPopup(){
     popup = new Popup();
-    
-    var elemDiv = document.createElement('div');
-    elemDiv.innerHTML = "\
-        <div id='ankiframe'>\
-            <div id='ankiframe_veil' style=''>\
-                <img id='ankibutton' src=\"https://rawgit.com/ninja33/anki-bookmarklet/master/akbl_plus_32.png\">\
-            </div>\
-            <style type='text/css'>\
-                #ankiframe { float: right; }\
-                #ankiframe_veil { display: block; position: fixed; bottom: 10px; right: 10px; cursor: pointer; z-index: 900; }\
-            </style>\
-        </div>";
-    document.body.appendChild(elemDiv);
-
-    document.getElementById("ankibutton").addEventListener('click', function(event) {
-        clickAnkibutton();
-    },false);
     window.addEventListener('mousedown', onMouseDown);
     window.addEventListener('mouseup', onMouseUp);
-    
-}
-    
-function onMouseDown(e) {
-    popup.hide();
+    window.addEventListener('message', onFrameMessage);
 }
     
 function jsonp(url, callback) {
@@ -147,6 +127,11 @@ function addNote(word, sentence, definition){
     xhr.send(JSON.stringify(newnote));
 }
 
+
+function onMouseDown(e) {
+    popup.hide();
+}
+
 function onMouseUp(e) {
     var selection = window.getSelection();
     var word = (selection.toString() || '').trim();
@@ -171,36 +156,39 @@ function onMouseUp(e) {
 
     var sentence = getSentence(word, node);
     getDefinition(word).then(definition=>{
+        abkl_word = word;
+        abkl_sentence = sentence;
+        abkl_definition = definition;
         var RangeRect = document.caretRangeFromPoint(e.clientX, e.clientY).getBoundingClientRect();
         var content = `\
             <html lang="zh-CN">\
                 <head><meta charset="UTF-8"><title></title>\
-                    <link rel="stylesheet" href="util/frame.css">\
+                    <link rel="stylesheet" href="${abkl_base}util/frame.css">\
                 </head>\
-                <body>\
+                <body style="margin:3px;">\
                 <div class="abkl-content">\
-                    <div class="abkl-sect abkl-word">${word}</div>\
-                    <div class="abkl-sect abkl-sent">${sentence}</div>\
+                    <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${abkl_base}util/add.png"/></span></div>\
                     <div class="abkl-sect abkl-defs">${definition}</div>\
+                    <div class="abkl-sect abkl-sent">${sentence}</div>\
                 </div>\
-                <!--script src="frame.js"></script-->\
+                <script src="${abkl_base}util/frame.js"></script>\
                 </body>\
-            </html>\
-            `;
+            </html>`;
         popup.showNextTo(RangeRect, content);
     });
 }
 
-function clickAnkibutton(){
-        //addNote(word, sentence, definition);
+function onFrameMessage(e) {
+    addNote(abkl_word, abkl_sentence, abkl_definition);
 }
 
 function initMyBookmarklet() {
 
-    var base_url = "https://rawgit.com/ninja33/anki-bookmarklet/master/";
-    var md5_js = base_url + "util/md5.js";
-    var popup_js = base_url + "util/popup.js";
-    loadjs([md5_js, popup_js], {
+    var libs = [];
+    libs.push(abkl_base + "util/md5.js");
+    libs.push(abkl_base + "util/popup.js");
+    libs.push(abkl_base + "common.css");
+    loadjs(libs, {
         success: function() {
 
             initOptions();
@@ -222,6 +210,6 @@ function initMyBookmarklet() {
         if (!( readystate = this.readyState ) || readystate == 'loaded' || readystate == 'complete' )
             initMyBookmarklet();
     };
-    document.documentElement.childNodes[0].appendChild( script );  
+    document.documentElement.childNodes[0].appendChild(script);  
 
 })();
