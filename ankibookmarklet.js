@@ -21,7 +21,7 @@ function initBookmartlet() {
     elemDiv.innerHTML = `\
         <div id='ankiframe'>\
             <div id='ankiframe_veil' style=''>\
-                <img id='ankibutton' src="${abkl_base}util/greenlight.gif">\
+                <img id='ankibutton' src="${abkl_base}img/greenlight.gif">\
             </div>\
             <style type='text/css'>\
                 #ankiframe { float: right; }\
@@ -173,15 +173,15 @@ function onMouseUp(e) {
         var content = `\
             <html lang="zh-CN">\
                 <head><meta charset="UTF-8"><title></title>\
-                    <link rel="stylesheet" href="${abkl_base}util/frame.css">\
+                    <link rel="stylesheet" href="${abkl_base}frame.css">\
                 </head>\
                 <body style="margin:3px;">\
                 <div class="abkl-content">\
-                    <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${abkl_base}util/add.png"/></span></div>\
+                    <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${abkl_base}img/add.png"/></span></div>\
                     <div class="abkl-sect abkl-defs">${definition}</div>\
                     <div class="abkl-sect abkl-sent">${sentence}</div>\
                 </div>\
-                <script src="${abkl_base}util/frame.js"></script>\
+                <script src="${abkl_base}frame.js"></script>\
                 </body>\
             </html>`;
         popup.showNextTo(RangeRect, content);
@@ -194,10 +194,8 @@ function onFrameMessage(e) {
 
 function loadLib() {
 
-    var libs = [];
-    libs.push(abkl_base + "util/md5.js");
-    libs.push(abkl_base + "util/popup.js");
-    libs.push(abkl_base + "common.css");
+    var libs = ["lib/md5.js","popup.js","common.css"];
+    libs.map(x=>abkl_base + x);
     loadjs(libs, {
         success: function() {
             initBookmartlet();
