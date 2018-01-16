@@ -13,7 +13,7 @@ function initBookmartlet() {
     popup = new Popup();
     window.addEventListener('touchstart', onMouseDown);
     window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('selectionchange', onMouseUp);
+    window.addEventListener('touchend', onMouseUp);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('message', onFrameMessage);
     showIndicator();
