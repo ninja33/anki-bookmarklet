@@ -11,21 +11,19 @@ function initBookmartlet() {
     abkl_options.sent = abkl_options.sent || 'sentence';
 
     popup = new Popup();
-    window.addEventListener("touchstart", onMouseDown, false);
+    window.addEventListener('touchstart', onMouseDown);
     window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener("touchend", onMouseUp, false);
+    window.addEventListener('selectionchange', onMouseUp);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('message', onFrameMessage);
     showIndicator();
 }
 
 function onMouseDown(e) {
-    //e.preventDefault();
     popup.hide();
 }
 
 function onMouseUp(e) {
-    e.preventDefault();
     const selection = window.getSelection();
     const word = (selection.toString() || '').trim();
     const trans = new Translator()
