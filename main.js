@@ -20,7 +20,7 @@ function initBookmartlet() {
 }
 
 function onMouseDown(e) {
-    e.preventDefault();
+    //e.preventDefault();
     popup.hide();
 }
 
