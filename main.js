@@ -43,12 +43,13 @@ function onMouseUp(e) {
 }
 
 function onFrameMessage(e) {
-    addNote(abkl_word, abkl_sentence, abkl_definition);
+    const target = new Ankiconnect();
+    target.addNote(abkl_options,{word:abkl_word, sent:abkl_sentence, defs:abkl_definition});
 }
 
 function loadLibrary() {
 
-    var libs = ["lib/md5.js", "popup.js", "translator.js", "util.js", "main.css"];
+    var libs = ["lib/md5.js", "popup.js", "translator.js", "util.js", "ankiconnect.js","main.css"];
     libs = libs.map(x => abkl_base + x);
     loadjs(libs, {
         success: function () {

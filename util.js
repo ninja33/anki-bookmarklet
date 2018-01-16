@@ -98,25 +98,3 @@ function renderContent(info) {
     </html>`;
     return content;
 }
-
-function addNote(word, sentence, definition) {
-    let note = {
-        fields: {},
-        tags: ['chrome']
-    };
-    note.deckName = abkl_options.deck;
-    note.modelName = abkl_options.type;
-    note.fields[abkl_options.word] = word;
-    note.fields[abkl_options.sent] = sentence;
-    note.fields[abkl_options.defs] = definition;
-
-    var newnote = {
-        action: 'addNote',
-        params: {
-            note
-        }
-    };
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://127.0.0.1:8765');
-    xhr.send(JSON.stringify(newnote));
-}
