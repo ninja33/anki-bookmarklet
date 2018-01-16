@@ -20,10 +20,12 @@ function initBookmartlet() {
 }
 
 function onMouseDown(e) {
+    e.preventDefault();
     popup.hide();
 }
 
 function onMouseUp(e) {
+    e.preventDefault();
     const selection = window.getSelection();
     const word = (selection.toString() || '').trim();
     const trans = new Translator()
