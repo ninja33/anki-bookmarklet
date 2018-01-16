@@ -14,9 +14,10 @@ class Popup {
         this.setContent(content);
     }
 
-    showNextTo(elementRect, content) {
-        this.inject();
+    showNextTo(point, content) {
 
+        this.inject();
+        const elementRect = this.getRangeRect(point);
         const popupRect = this.popup.getBoundingClientRect();
 
         let posX = elementRect.left;
@@ -47,6 +48,10 @@ class Popup {
         
         const doc = this.popup;
         doc.srcdoc=content;
+    }
+
+    getRangeRect(point){
+        return document.caretRangeFromPoint(point.x, point.y).getBoundingClientRect();
     }
 
     sendMessage(action, params, callback) {
