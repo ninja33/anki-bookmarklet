@@ -194,7 +194,7 @@ function onFrameMessage(e) {
 
 function loadLib() {
 
-    var libs = ["lib/md5.js","popup.js","common.css"];
+    var libs = ["lib/md5.js","popup.js","ankibookmarklet.css"];
     libs.map(x=>abkl_base + x);
     loadjs(libs, {
         success: function() {
