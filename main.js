@@ -11,7 +11,9 @@ function initBookmartlet() {
     abkl_options.sent = abkl_options.sent || 'sentence';
 
     popup = new Popup();
+    window.addEventListener("touchstart", onMouseDown, false);
     window.addEventListener('mousedown', onMouseDown);
+    window.addEventListener("touchend", onMouseUp, false);
     window.addEventListener('mouseup', onMouseUp);
     window.addEventListener('message', onFrameMessage);
     showIndicator();
