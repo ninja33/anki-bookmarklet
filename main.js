@@ -13,13 +13,13 @@ class Ankibookmarklet {
         }
         this.selectionEndTimeout = null;
 
-        window.addEventListener('mousemove', (e) => this.onMouseMove(e));
-        window.addEventListener('touchmove', (e) => this.onTouchMove(e));
-        window.addEventListener('mousedown', (e) => this.onMouseDown(e));
-        window.addEventListener('touchstart', (e) => this.onMouseDown(e));
-        window.addEventListener('message', (e) => this.onFrameMessage(e));
+        document.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        document.addEventListener('touchmove', (e) => this.onTouchMove(e));
+        document.addEventListener('mousedown', (e) => this.onMouseDown(e));
+        document.addEventListener('touchstart', (e) => this.onMouseDown(e));
+        document.addEventListener('message', (e) => this.onFrameMessage(e));
         document.addEventListener("selectionchange", (e) => this.userSelectionChanged(e));
-        window.addEventListener('selectionend', (e) => this.onSelectionEnd(e));
+        document.addEventListener('selectionend', (e) => this.onSelectionEnd(e));
 
 
         showIndicator(this.options);
@@ -44,7 +44,7 @@ class Ankibookmarklet {
 
         this.selectionEndTimeout = setTimeout(function () {
             var selEndEvent = new CustomEvent("selectionend");
-            window.dispatchEvent(selEndEvent);
+            document.dispatchEvent(selEndEvent);
         }, 500);
     }
 

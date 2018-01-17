@@ -45,7 +45,7 @@ class Popup {
                 window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
                 pos-x: ${posX} | pos-y: ${posY}<br>\
             </div>`;
-        this.showAt({x: posX, y: posY}, content);
+        this.showAt({x:10, y:10}, content);
     }
 
     hide() {
