@@ -1,19 +1,20 @@
 class Ankibookmarklet {
     constructor() {
 
-        this.mousepoint = {x:0,y:0};
+        this.mousepoint = { x: 0, y: 0 };
         this.noteinfo = {};
         this.options = loadOptions();
         this.popup = new Popup();
         this.translator = new Translator();
-        if (isiOS()){
+        if (isiOS()) {
             this.target = new Ankimobile();
         } else {
             this.target = new Ankiconnect();
         }
         this.selectionEndTimeout = null;
 
-        window.addEventListener('mousemove', (e) => this.mousepoint = {x:e.clientX, y:e.clientY});
+        window.addEventListener('mousemove', (e) => this.onMouseMove(e));
+        window.addEventListener('touchmove', (e) => this.onTouchMove(e));
         window.addEventListener('mousedown', (e) => this.onMouseDown(e));
         window.addEventListener('touchstart', (e) => this.onMouseDown(e));
         window.addEventListener('message', (e) => this.onFrameMessage(e));
@@ -22,6 +23,16 @@ class Ankibookmarklet {
 
 
         showIndicator(this.options);
+    }
+
+    onMouseMove(e) {
+        this.mousepoint = { x: e.clientX, y: e.clientY };
+    }
+
+    onTouchMove(e) {
+        //e.preventDefault();
+        let touch = e.touches[0];
+        this.mousepoint = { x: touch.pageX, y: touch.pageY };
     }
 
     userSelectionChanged(e) {
