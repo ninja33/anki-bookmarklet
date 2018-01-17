@@ -16,7 +16,7 @@
         s.type = "text/javascript";
         s.src = "https://cdn.rawgit.com/muicss/loadjs/3.5.2/dist/loadjs.min.js";
         s.onload = function () {
-            let libs = _bklOptions.libs.map((x) => _bklOptions.base + x);
+            let libs = _bklOptions.libs.map((x) => _bklOptions.base + x + "?bust="+new Date().getTime()) ;
             loadjs(libs, () => {
                 window.ankibookmarklet = new Ankibookmarklet();
                 showIndicator(_bklOptions);
