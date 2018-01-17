@@ -30,9 +30,16 @@ class Popup {
             posY = elementRect.top - popupRect.height - this.offset;
         }
 
+        var device = "";
+        if (isiOS()){
+            device = "iOS";
+        } else {
+            device = "desk";
+        }
+
         content = content + `
             <div class="abkl-sect" style="font-size:0.8em;">\
-                point-x: ${point.x} | point-y:${point.y}<br>\
+                ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
                 element-left: ${elementRect.left} | element-width: ${elementRect.width}<br>\
                 popup-left: ${popupRect.left} | popup-width: ${popupRect.width}<br>\
                 window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
