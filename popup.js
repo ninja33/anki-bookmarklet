@@ -1,14 +1,14 @@
 class Popup {
     constructor() {
-        this.popup  = null;
+        this.popup = null;
         this.offset = 10;
     }
 
     showAt(pos, content) {
         this.inject();
 
-        this.popup.style.left       = pos.x + 'px';
-        this.popup.style.top        = pos.y + 'px';
+        this.popup.style.left = pos.x + 'px';
+        this.popup.style.top = pos.y + 'px';
         this.popup.style.visibility = 'visible';
 
         this.setContent(content);
@@ -31,7 +31,7 @@ class Popup {
             posY = elementRect.top - popupRect.height - this.offset;
         }
 
-        var device = isiOS() ? "touch":"mouse";
+        var device = isiOS() ? "touch" : "mouse";
         content = content + `
             <div class="abkl-sect" style="font-size:0.8em;">\
                 ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
@@ -40,7 +40,7 @@ class Popup {
                 window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
                 pos-x: ${posX} | pos-y: ${posY}<br>\
             </div>`;
-        this.showAt({x:10, y:10}, content);
+        this.showAt({ x: 10, y: 10 }, content);
     }
 
     hide() {
@@ -55,18 +55,18 @@ class Popup {
         }
 
         this.popup.contentWindow.scrollTo(0, 0);
-        
+
         const doc = this.popup;
-        doc.srcdoc=content;
+        doc.srcdoc = content;
     }
 
-    getRangeRect(point){
+    getRangeRect(point) {
         return document.caretRangeFromPoint(point.x, point.y).getBoundingClientRect();
     }
 
     sendMessage(action, params, callback) {
         if (this.popup !== null) {
-            this.popup.contentWindow.postMessage({action, params}, '*');
+            this.popup.contentWindow.postMessage({ action, params }, '*');
         }
     }
 
