@@ -31,7 +31,7 @@ class Popup {
             posY = elementRect.top - popupRect.height - this.offset;
         }
 
-        var device = isiOS() ? "touch" : "mouse";
+        var device = isiOS() ? "tp" : "mp";
         content = content + `
             <div class="abkl-sect" style="font-size:0.8em;">\
                 ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
@@ -40,7 +40,7 @@ class Popup {
                 window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
                 pos-x: ${posX} | pos-y: ${posY}<br>\
             </div>`;
-        this.showAt({ x: 10, y: 10 }, content);
+        this.showAt({ x: posX, y: posY }, content);
     }
 
     hide() {
