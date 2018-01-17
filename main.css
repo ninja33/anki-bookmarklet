@@ -5,9 +5,11 @@ iframe#abkl-popup {
     box-shadow:       0 0 5px rgba(0, 0, 0, .5);
     border-radius:    3px;  
     height:           240px;
-    position:         fixed;
+    position:         absolute;
     resize:           both;
     visibility:       hidden;
     width:            320px;
     z-index:          2147483647;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;            
 }
