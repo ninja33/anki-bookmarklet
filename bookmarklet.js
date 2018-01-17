@@ -7,7 +7,7 @@
         sent: "sentence",
         base: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
         prod: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
-        libs: ["lib/md5.js", "main.css", "translator.js", "popup.js", "util.js", "ankiconnect.js"],
+        libs: ["main.css","lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "main.js"],
     };
     if (window.showIndicator !== undefined) {
         showIndicator(_bklOptions);
