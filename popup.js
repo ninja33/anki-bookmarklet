@@ -31,15 +31,6 @@ class Popup {
             posY = elementRect.top - popupRect.height - this.offset;
         }
 
-        var device = isiOS() ? "tp" : "mp";
-        content = content + `
-            <div class="abkl-sect" style="font-size:0.8em;">\
-                ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
-                element-left: ${elementRect.left} | element-width: ${elementRect.width}<br>\
-                popup-left: ${popupRect.left} | popup-width: ${popupRect.width}<br>\
-                window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
-                pos-x: ${posX} | pos-y: ${posY}<br>\
-            </div>`;
         this.showAt({ x: posX, y: posY }, content);
     }
 

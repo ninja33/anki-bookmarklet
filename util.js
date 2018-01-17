@@ -111,7 +111,7 @@ function renderPopup(noteinfo, option = defaultOptions()) {
         sent
     } = noteinfo;
     let base = option.base;
-    var _content = `\
+    var content = `\
     <html lang="zh-CN">\
         <head><meta charset="UTF-8"><title></title>\
             <link rel="stylesheet" href="${base}frame.css">\
@@ -125,18 +125,21 @@ function renderPopup(noteinfo, option = defaultOptions()) {
         <script src="${base}frame.js"></script>\
         </body>\
     </html>`;
-    var content = `\
-        <link rel="stylesheet" href="${base}frame.css">\
-        <div class="abkl-content">\
-            <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${base}img/add.png"/></span></div>\
-            <div class="abkl-sect abkl-defs">${defs}</div>\
-            <div class="abkl-sect abkl-sent">${sent}</div>\
-        </div>\
-        <script src="${base}frame.js"></script>\
-        `;
     return content;
 }
 
 function isiOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+
+function showXY(point){
+    var device = isiOS() ? "tp" : "mp";
+    content = content + `
+        <div class="abkl-sect" style="font-size:0.8em;">\
+            ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
+            element-left: ${elementRect.left} | element-width: ${elementRect.width}<br>\
+            popup-left: ${popupRect.left} | popup-width: ${popupRect.width}<br>\
+            window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
+            pos-x: ${posX} | pos-y: ${posY}<br>\
+        </div>`;
 }
