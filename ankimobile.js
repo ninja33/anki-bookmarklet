@@ -5,9 +5,6 @@ class Ankimobile {
     }
 
     addNote(options, noteinfo) {
-        this.options = options;
-        this.noteinfo = noteinfo;
-
         for(let key in options) {
             options[key] = encodeURI(options[key]);
         }
