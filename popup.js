@@ -31,7 +31,7 @@ class Popup {
         }
 
         content = content + `
-            <div class="abkl-sect">\
+            <div class="abkl-sect" style="font-size:0.8em;">\
                 point-x: ${point.x} | point-y:${point.y}<br>\
                 element-left: ${elementRect.left} | element-width: ${elementRect.width}<br>\
                 popup-left: ${popupRect.left} | popup-width: ${popupRect.width}<br>\
