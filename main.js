@@ -14,9 +14,8 @@ class Ankibookmarklet {
         this.selectionEndTimeout = null;
 
         document.addEventListener('mousemove', (e) => this.onMouseMove(e));
-        document.addEventListener('touchmove', (e) => this.onTouchMove(e));
         document.addEventListener('mousedown', (e) => this.onMouseDown(e));
-        document.addEventListener('touchstart', (e) => this.onMouseDown(e));
+        document.addEventListener('touchstart', (e) => this.onTouchStart(e));
         document.addEventListener('message', (e) => this.onFrameMessage(e));
         document.addEventListener("selectionchange", (e) => this.userSelectionChanged(e));
         document.addEventListener('selectionend', (e) => this.onSelectionEnd(e));
@@ -27,12 +26,6 @@ class Ankibookmarklet {
 
     onMouseMove(e) {
         this.mousepoint = { x: e.clientX, y: e.clientY };
-    }
-
-    onTouchMove(e) {
-        //e.preventDefault();
-        let touch = e.touches[0];
-        this.mousepoint = { x: touch.pageX, y: touch.pageY };
     }
 
     userSelectionChanged(e) {
@@ -73,6 +66,12 @@ class Ankibookmarklet {
 
     onMouseDown(e) {
         this.popup.hide();
+    }
+
+    onTouchStart(e){
+        this.popup.hide();
+        let touch = e.touches[0];
+        this.mousepoint = { x: touch.pageX, y: touch.pageY };
     }
 
     onFrameMessage(e) {
