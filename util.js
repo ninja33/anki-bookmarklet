@@ -6,7 +6,7 @@ function defaultOptions(options = {}) {
         defs: 'glossary',
         sent: 'sentence',
         base: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
-        libs: ["main.css", "lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "main.js"],
+        libs: ["main.css", "lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "ankimobile.js", "main.js"],
     };
 
     for (let key in defaults) {
@@ -111,7 +111,7 @@ function renderPopup(noteinfo, option = defaultOptions()) {
         sent
     } = noteinfo;
     let base = option.base;
-    var content = `\
+    var _content = `\
     <html lang="zh-CN">\
         <head><meta charset="UTF-8"><title></title>\
             <link rel="stylesheet" href="${base}frame.css">\
@@ -125,5 +125,18 @@ function renderPopup(noteinfo, option = defaultOptions()) {
         <script src="${base}frame.js"></script>\
         </body>\
     </html>`;
+    var content = `\
+        <link rel="stylesheet" href="${base}frame.css">\
+        <div class="abkl-content">\
+            <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${base}img/add.png"/></span></div>\
+            <div class="abkl-sect abkl-defs">${defs}</div>\
+            <div class="abkl-sect abkl-sent">${sent}</div>\
+        </div>\
+        <script src="${base}frame.js"></script>\
+        `;
     return content;
+}
+
+function isiOS() {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }

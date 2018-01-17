@@ -6,7 +6,11 @@ class Ankibookmarklet {
         this.options = loadOptions();
         this.popup = new Popup();
         this.translator = new Translator();
-        this.target = new Ankiconnect();
+        if (isiOS()){
+            this.target = new Ankimobile();
+        } else {
+            this.target = new Ankiconnect();
+        }
         this.selectionEndTimeout = null;
 
         window.addEventListener('mousemove', (e) => this.mousepoint = {x:e.clientX, y:e.clientY});

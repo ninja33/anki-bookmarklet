@@ -29,7 +29,7 @@ class Popup {
         if (posY + popupRect.height >= window.innerHeight) {
             posY = elementRect.top - popupRect.height - this.offset;
         }
-
+        content = content + `<div class="abkl-sect">element-left:${elementRect.left}</div>`;
         this.showAt({x: posX, y: posY}, content);
     }
 
