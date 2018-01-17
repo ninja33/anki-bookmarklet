@@ -6,7 +6,7 @@ function defaultOptions(options = {}) {
         defs: 'glossary',
         sent: 'sentence',
         base: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
-        libs: ["main.css","lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "main.js"],
+        libs: ["main.css", "lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "main.js"],
     };
 
     for (let key in defaults) {
@@ -24,17 +24,20 @@ function loadOptions() {
 
 function showIndicator(option = defaultOptions()) {
     let base = option.base;
+    let previousNode = document.getElementById("bkl_indicator"); //check if there is previous div existing
+    if (previousNode != undefined)
+        document.body.removeChild(previousNode);
+
     var elemDiv = document.createElement('div');
+    elemDiv.setAttribute("id", "bkl_indicator");
     elemDiv.innerHTML = `\
-        <div id='ankiframe'>\
-            <div id='ankiframe_veil' style=''>\
-                <img id='ankibutton' src="${base}img/greenlight.gif">\
-            </div>\
-            <style type='text/css'>\
-                #ankiframe { float: right; }\
-                #ankiframe_veil { display: block; position: fixed; bottom: 5px; right: 5px; cursor: pointer; z-index: 900; }\
-            </style>\
-        </div>`;
+        <div id='bkl_indicator_content' style=''>\
+            <img id='ankibutton' src="${base}img/greenlight.gif">\
+        </div>\
+        <style type='text/css'>\
+            #bkl_indicator {float: right}\
+            #bkl_indicator_content { display: block; position: fixed; bottom: 5px; right: 5px; cursor: pointer; z-index: 900; }\
+        </style>`;
     document.body.appendChild(elemDiv);
 }
 

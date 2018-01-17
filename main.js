@@ -1,6 +1,7 @@
 class Ankibookmarklet {
     constructor() {
 
+        this.mousepoint = {x:0,y:0};
         this.noteinfo = {};
         this.options = loadOptions();
         this.popup = new Popup();
@@ -8,37 +9,35 @@ class Ankibookmarklet {
         this.target = new Ankiconnect();
         this.selectionEndTimeout = null;
 
-        window.addEventListener('mousedown', (e)=>this.onMouseDown(e));
-        window.addEventListener('mouseup', (e)=>this.onMouseUp(e));
-        window.addEventListener('message', (e)=>this.onFrameMessage(e));
-        window.addEventListener('selectionEnd', (e)=>this.onSelectionEnd(e));
+        window.addEventListener('mousemove', (e) => this.mousepoint = {x:e.clientX, y:e.clientY});
+        window.addEventListener('mousedown', (e) => this.onMouseDown(e));
+        window.addEventListener('touchstart', (e) => this.onMouseDown(e));
+        window.addEventListener('message', (e) => this.onFrameMessage(e));
+        document.addEventListener("selectionchange", (e) => this.userSelectionChanged(e));
+        window.addEventListener('selectionend', (e) => this.onSelectionEnd(e));
 
-        //window.addEventListener('touchstart', onMouseDown);
-        //window.addEventListener('touchend', onMouseUp);
 
         showIndicator(this.options);
     }
-    
-    document.onselectionchange = userSelectionChanged;
 
-    userSelectionChanged() {
-    
+    userSelectionChanged(e) {
+
         // wait 500 ms after the last selection change event
         if (this.selectionEndTimeout) {
             clearTimeout(this.selectionEndTimeout);
         }
-    
+
         this.selectionEndTimeout = setTimeout(function () {
-            var selEndEvent = new CustomEvent("selectionEnd", {"detail": latestSelection});
+            var selEndEvent = new CustomEvent("selectionend");
             window.dispatchEvent(selEndEvent);
         }, 500);
     }
-    
+
     onSelectionEnd(e) {
-    
+
         // reset selection timeout
         this.selectionEndTimeout = null;
-    
+
         const selection = window.getSelection();
         const word = (selection.toString() || '').trim();
         this.translator.getDefinition(word).then(defs => {
@@ -50,8 +49,8 @@ class Ankibookmarklet {
             };
             let content = renderPopup(this.noteinfo)
             this.popup.showNextTo({
-                x: e.clientX,
-                y: e.clientY
+                x: this.mousepoint.x,
+                y: this.mousepoint.y
             }, content);
         });
 
@@ -61,27 +60,7 @@ class Ankibookmarklet {
         this.popup.hide();
     }
 
-    onMouseUp(e) {
-        const selection = window.getSelection();
-        const word = (selection.toString() || '').trim();
-        this.translator.getDefinition(word).then(defs => {
-            var sent = getSentence(word);
-            this.noteinfo = {
-                word,
-                defs,
-                sent
-            };
-            let content = renderPopup(this.noteinfo)
-            this.popup.showNextTo({
-                x: e.clientX,
-                y: e.clientY
-            }, content);
-        });
-    }
-
     onFrameMessage(e) {
         this.target.addNote(this.options, this.noteinfo);
     }
 }
-
-window.ankibookmarklet = new Ankibookmarklet();
