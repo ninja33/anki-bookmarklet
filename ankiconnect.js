@@ -1,21 +1,20 @@
 class Ankiconnect{
     constructor() {
         this.options    = {};
-        this.info       = {};
+        this.noteinfo       = {};
     }
     
-    addNote(options, info) {
+    addNote(options, noteinfo) {
         let note = {
             fields: {},
             tags: ['chrome']
         };
-        let {word, sent, defs} = info;
     
         note.deckName  = options.deck;
         note.modelName = options.type;
-        note.fields[options.word] = word;
-        note.fields[options.sent] = sent;
-        note.fields[options.defs] = defs;
+        note.fields[options.word] = noteinfo.word;
+        note.fields[options.defs] = noteinfo.defs;
+        note.fields[options.sent] = noteinfo.sent;
     
         var ankiNote = {
             action: 'addNote',

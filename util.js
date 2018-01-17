@@ -1,9 +1,34 @@
-function showIndicator(){
+function defaultOptions(options = {}) {
+    const defaults = {
+        deck: 'Antimoon',
+        type: 'Antimoon',
+        word: 'expression',
+        defs: 'glossary',
+        sent: 'sentence',
+        base: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
+        libs: ["lib/md5.js", "main.css", "translator.js", "popup.js", "util.js", "ankiconnect.js"],
+    };
+
+    for (let key in defaults) {
+        if (!(key in options)) {
+            options[key] = defaults[key];
+        }
+    }
+
+    return options;
+}
+
+function loadOptions() {
+    return !(typeof _bklOptions == "undefined") ? defaultOptions(_bklOptions) : defaultOptions();
+}
+
+function showIndicator(option = defaultOptions()) {
+    let base = option.base;
     var elemDiv = document.createElement('div');
     elemDiv.innerHTML = `\
         <div id='ankiframe'>\
             <div id='ankiframe_veil' style=''>\
-                <img id='ankibutton' src="${abkl_base}img/greenlight.gif">\
+                <img id='ankibutton' src="${base}img/greenlight.gif">\
             </div>\
             <style type='text/css'>\
                 #ankiframe { float: right; }\
@@ -76,24 +101,25 @@ function getSentence(word) {
     return cutSentence(word, wordContent);
 }
 
-function renderContent(info) {
-    var {
+function renderPopup(noteinfo, option = defaultOptions()) {
+    let {
         word,
-        definition,
-        sentence
-    } = info;
+        defs,
+        sent
+    } = noteinfo;
+    let base = option.base;
     var content = `\
     <html lang="zh-CN">\
         <head><meta charset="UTF-8"><title></title>\
-            <link rel="stylesheet" href="${abkl_base}frame.css">\
+            <link rel="stylesheet" href="${base}frame.css">\
         </head>\
         <body style="margin:3px;">\
         <div class="abkl-content">\
-            <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${abkl_base}img/add.png"/></span></div>\
-            <div class="abkl-sect abkl-defs">${definition}</div>\
-            <div class="abkl-sect abkl-sent">${sentence}</div>\
+            <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${base}img/add.png"/></span></div>\
+            <div class="abkl-sect abkl-defs">${defs}</div>\
+            <div class="abkl-sect abkl-sent">${sent}</div>\
         </div>\
-        <script src="${abkl_base}frame.js"></script>\
+        <script src="${base}frame.js"></script>\
         </body>\
     </html>`;
     return content;
