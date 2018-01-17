@@ -26,7 +26,7 @@ class Translator {
         let to = 'zh-CHS';
 
         let sign = md5(appKey + this.word + salt + appSecret);
-        let base = 'http://openapi.youdao.com/api?'
+        let base = 'https://openapi.youdao.com/api?'
         let param = `q=${this.word}&appKey=${appKey}&salt=${salt}&from=${from}&to=${to}&sign=${sign}`;
         return (base + param);
     }
