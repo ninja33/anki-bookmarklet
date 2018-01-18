@@ -30,8 +30,17 @@ class Popup {
         if (posY + popupRect.height >= window.innerHeight) {
             posY = elementRect.top - popupRect.height - this.offset;
         }
-
-        this.showAt({ x: posX, y: posY }, content);
+        content = content + `<hr>
+            <div style="font-size:0.7em">
+                point-x:${point.x}/point-y:${point.y}<br>
+                win-width:${window.innerWidth}/win-height:${window.innerHeight}<br>
+                pop-w:${popupRect.width}/pop-h:${popupRect.height}<br>
+                posX:${posX}/posY:${posY}
+            <div>`;
+        this.showAt({
+            x: 0,
+            y: 0
+        }, content);
     }
 
     hide() {
@@ -57,7 +66,10 @@ class Popup {
 
     sendMessage(action, params, callback) {
         if (this.popup !== null) {
-            this.popup.contentWindow.postMessage({ action, params }, '*');
+            this.popup.contentWindow.postMessage({
+                action,
+                params
+            }, '*');
         }
     }
 
