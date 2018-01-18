@@ -133,13 +133,11 @@ function isiOS() {
 }
 
 function showXY(point){
-    var device = isiOS() ? "tp" : "mp";
-    content = content + `
-        <div class="abkl-sect" style="font-size:0.8em;">\
-            ${device}-point-x: ${point.x} | ${device}-point-y:${point.y}<br>\
-            element-left: ${elementRect.left} | element-width: ${elementRect.width}<br>\
-            popup-left: ${popupRect.left} | popup-width: ${popupRect.width}<br>\
-            window-width: ${window.innerWidth} | window-height: ${window.innerHeight}<br>\
-            pos-x: ${posX} | pos-y: ${posY}<br>\
-        </div>`;
+    content = content + `<hr>
+    <div style="font-size:0.7em">
+        point-x:${point.x}/point-y:${point.y}<br>
+        win-width:${window.innerWidth}/win-height:${window.innerHeight}<br>
+        pop-w:${popupRect.width}/pop-h:${popupRect.height}<br>
+        posX:${posX}/posY:${posY}
+    <div>`;
 }

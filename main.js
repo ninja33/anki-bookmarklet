@@ -71,7 +71,7 @@ class Ankibookmarklet {
     onTouchStart(e){
         this.popup.hide();
         let touch = e.touches[0];
-        this.mousepoint = { x: touch.pageX, y: touch.pageY };
+        this.mousepoint = { x: touch.clientX, y: touch.clientY };
     }
 
     onFrameMessage(e) {

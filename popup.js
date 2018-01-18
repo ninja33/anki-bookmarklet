@@ -1,7 +1,7 @@
 class Popup {
     constructor() {
         this.popup = null;
-        this.offset = 10;
+        this.offset = 5;
     }
 
     showAt(pos, content) {
@@ -45,13 +45,6 @@ class Popup {
         posX = (posX < 0) ? 0 : posX;
         posY = (posY < 0) ? 0 : posY;
 
-        content = content + `<hr>
-            <div style="font-size:0.7em">
-                point-x:${point.x}/point-y:${point.y}<br>
-                win-width:${window.innerWidth}/win-height:${window.innerHeight}<br>
-                pop-w:${popupRect.width}/pop-h:${popupRect.height}<br>
-                posX:${posX}/posY:${posY}
-            <div>`;
         this.showAt({
             x: posX,
             y: posY
