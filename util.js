@@ -128,6 +128,20 @@ function renderPopup(noteinfo, option = defaultOptions()) {
     return content;
 }
 
+// Polyfill caretRangeFromPoint() using the newer caretPositionFromPoint()
+if (!document.caretRangeFromPoint){
+    document.caretRangeFromPoint = function polyfillcaretRangeFromPoint(x,y){
+        let range = document.createRange();
+        let position = document.caretPositionFromPoint(x,y);
+        if (!position) {
+            return null;
+        }
+        range.setStart(position.offsetNode, position.offset);
+        range.setEnd(position.offsetNode, position.offset);
+        return range;
+    };
+}
+
 function isiOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
