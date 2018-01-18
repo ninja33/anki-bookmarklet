@@ -20,16 +20,31 @@ class Popup {
         const elementRect = this.getRangeRect(point);
         const popupRect = this.popup.getBoundingClientRect();
 
-        let posX = isiOS() ? point.x : elementRect.left;
-        if (posX + popupRect.width >= window.innerWidth) {
-            posX = window.innerWidth - popupRect.width;
+        if (isiOS()) {
+            var posX = point.x;
+            if (posX + popupRect.width >= window.innerWidth) {
+                posX = window.innerWidth - popupRect.width;
+            }
+
+            var posY = point.y + this.offset;
+            if (posY + popupRect.height >= window.innerHeight) {
+                posY = point.y - popupRect.height - this.offset;
+            }
+        } else {
+            var posX = elementRect.left;
+            if (posX + popupRect.width >= window.innerWidth) {
+                posX = window.innerWidth - popupRect.width;
+            }
+
+            var posY = elementRect.bottom + this.offset;
+            if (posY + popupRect.height >= window.innerHeight) {
+                posY = elementRect.top - popupRect.height - this.offset;
+            }
         }
 
-        let posY = isiOS() ? point.y : elementRect.bottom;
-        posY = posY + this.offset;
-        if (posY + popupRect.height >= window.innerHeight) {
-            posY = elementRect.top - popupRect.height - this.offset;
-        }
+        posX = (posX < 0) ? 0 : posX;
+        posY = (posY < 0) ? 0 : posY;
+
         content = content + `<hr>
             <div style="font-size:0.7em">
                 point-x:${point.x}/point-y:${point.y}<br>
@@ -38,8 +53,8 @@ class Popup {
                 posX:${posX}/posY:${posY}
             <div>`;
         this.showAt({
-            x: 0,
-            y: 0
+            x: posX,
+            y: posY
         }, content);
     }
 
