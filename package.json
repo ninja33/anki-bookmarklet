@@ -20,10 +20,8 @@
   },
   "homepage": "https://github.com/ninja33/anki-bookmarklet#readme",
   "devDependencies": {
+    "eslint": "^4.9.0",
     "eslint-config-airbnb-base": "^12.1.0",
-    "eslint-plugin-import": "^2.8.0"
-  },
-  "dependencies": {
-    "eslint-config-airbnb": "^16.1.0"
+    "eslint-plugin-import": "^2.7.0"
   }
 }

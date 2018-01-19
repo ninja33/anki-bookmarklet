@@ -1,4 +1,4 @@
-class Ankiconnect{
+class Ankiconnect {
     constructor() {
         this.options    = {};
         this.noteinfo       = {};

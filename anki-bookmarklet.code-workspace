@@ -4,5 +4,12 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		// Turns auto fix on save on or off.
+		"eslint.autoFixOnSave": true,
+
+		// Controls whether eslint is enabled for JavaScript files or not.
+		"eslint.enable": true,
+		"editor.tabSize": 4,
+	}
 }
