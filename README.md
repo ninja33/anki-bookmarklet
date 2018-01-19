@@ -17,7 +17,7 @@ It's a simple and all in one bookmarklet to help language learner to translate w
 ## Bookmarklet Source to be Copied
 
 ```javascript
-javascript:(function () { _bklOptions = { deck: "Antimoon", type: "Antimoon", word: "expression", defs: "glossary", sent: "sentence", base: "https://rawgit.com/ninja33/anki-bookmarklet/master/", prod: "https://rawgit.com/ninja33/anki-bookmarklet/master/", libs: ["main.css", "lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "ankimobile.js", "main.js"], }; if (window.showIndicator !== undefined) { showIndicator(_bklOptions); } else { var s = document.createElement("script"); s.type = "text/javascript"; s.src = "https://cdn.rawgit.com/muicss/loadjs/3.5.2/dist/loadjs.min.js"; s.onload = function () { let libs = _bklOptions.libs.map((x) => _bklOptions.base + x) ; loadjs(libs, () => { window.ankibookmarklet = new Ankibookmarklet(); showIndicator(_bklOptions); }); }; document.body.appendChild(s); } })()
+javascript:(function () { _bklOptions = { deck: "Antimoon", type: "Antimoon", word: "expression", defs: "glossary", sent: "sentence", base: "https://rawgit.com/ninja33/anki-bookmarklet/master/", }; if (window.showIndicator !== undefined) { showIndicator(_bklOptions); } else { var s = document.createElement("script"); s.type = "text/javascript"; s.src = "https://cdn.rawgit.com/muicss/loadjs/3.5.2/dist/loadjs.min.js"; s.onload = function () { let libs = [ "main.css", "lib/jsonp.js", "lib/md5.js", "popup.js", "util.js", "youdao.js", "translator.js", "ankiconnect.js", "ankimobile.js", "main.js" ]; lib = libs.map((x) => _bklOptions.base + x); loadjs(libs, () => { window.ankibookmarklet = new Ankibookmarklet(); showIndicator(_bklOptions); }); }; document.body.appendChild(s); } })()
 ```
 
 ## Options
@@ -43,6 +43,4 @@ This bookmark is written by javascript and the source actually is stored on Gith
 
 you may change below option in above source of variable `abkl_options` to match your git user name and repository. It will be used to make script/css/images  base url
 
-- user:"ninja33";             //define git user name
-- repo:"anki-bookmarklet";    //define git repository name
-
+- base: "https://rawgit.com/{user}/{repo}/{branch}/"; //replace `{user}`, `{repo}`, `{branch}` to your git username, repository and branch name.
