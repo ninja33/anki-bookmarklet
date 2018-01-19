@@ -13,7 +13,7 @@
         var s = document.createElement("script");
         s.type = "text/javascript";
         s.src = "https://cdn.rawgit.com/muicss/loadjs/3.5.2/dist/loadjs.min.js";
-        s.onload = function () {
+        s.onload = () => {
             let libs = [
                 "main.css",
                 "lib/jsonp.js",

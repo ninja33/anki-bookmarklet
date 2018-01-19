@@ -1,16 +1,14 @@
 # Translation Bookmarklet for Ankiconnect/Ankimobile 
 
-## Introduction
-
-It's a simple and all in one bookmarklet to help language learner to translate word and make anki note while reading web page.
+It's a simple client side javascript(bookmarklet) to help language learner translate word and make anki note while reading web page.
 
 ## Usage
 
 1. Save a bookmark for your browser. Next, edit this bookmark, copy and paste below source to bookmark's `url` field, and then save.
 2. Click this bookmarklet while browsing web. After loading, a green light LED will keep flashing at right/bottom of the bowser which means `ready`.
 3. Select web page text by dragging or double clicking mouse left button. It will popup a window to display 3 fields as below:
-- Selected Text(Word) 
-- Translated Text(Definition)
+- Selected Text (Word) 
+- Translated Text (Definition)
 - Context(Sentence)
 4. Click green "plus" icon top/right of the window. Based on below option, it will add a note to anki deskptop client through ankiconnect addon.
 
@@ -27,7 +25,7 @@ So, all options must be hardcode and passed by above bookmarklet code itself.
 
 ### Anki options
 
-If you want to use this bookmarklet to make note by using ankiconnect, you may change below option in above source of variable `abkl_options` to match your anki deck/type/fields
+If you want to use this bookmarklet to make note by using ankiconnect, you may change below option in above source of variable `bklOptions` to match your anki deck/type/fields
 
 - deck:"Antimoon";    //define anki deck name
 - type:"Antimoon";    //define anki note type name
