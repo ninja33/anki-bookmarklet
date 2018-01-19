@@ -2,7 +2,7 @@ class Translator {
     constructor() {
         this.word = "";
         this.defs = {};
-        this.dictionary = new Youdao();
+        this.dictionary = new Collins();
     }
 
     isEmpty() {

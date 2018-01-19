@@ -4,6 +4,6 @@
         "browser": true
     },
     "rules": {
-        "linebreak-style":["warn","window"]
+        "linebreak-style":"off"
     }
 }

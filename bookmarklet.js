@@ -21,12 +21,13 @@
                 "popup.js",
                 "util.js",
                 "youdao.js",
+                "collins.js",
                 "translator.js",
                 "ankiconnect.js",
                 "ankimobile.js",
                 "main.js"
             ];
-            lib = libs.map((x) => _bklOptions.base + x);
+            libs = libs.map((x) => _bklOptions.base + x);
             loadjs(libs, () => {
                 window.ankibookmarklet = new Ankibookmarklet();
                 showIndicator(_bklOptions);
