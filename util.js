@@ -6,7 +6,6 @@ function defaultOptions(options = {}) {
         defs: 'glossary',
         sent: 'sentence',
         base: "https://rawgit.com/ninja33/anki-bookmarklet/master/",
-        libs: ["main.css", "lib/md5.js", "translator.js", "popup.js", "util.js", "ankiconnect.js", "ankimobile.js", "main.js"],
     };
 
     for (let key in defaults) {

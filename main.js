@@ -1,17 +1,16 @@
 class Ankibookmarklet {
     constructor() {
 
-        this.mousepoint = { x: 0, y: 0 };
+        this.point = {
+            x: 0,
+            y: 0
+        };
         this.noteinfo = {};
         this.options = loadOptions();
         this.popup = new Popup();
         this.translator = new Translator();
-        if (isiOS()) {
-            this.target = new Ankimobile();
-        } else {
-            this.target = new Ankiconnect();
-        }
-        this.selectionEndTimeout = null;
+        this.target = isiOS() ? new Ankimobile() : new Ankiconnect();
+        this.timeout = null;
 
         window.addEventListener('mousemove', (e) => this.onMouseMove(e));
         window.addEventListener('mousedown', (e) => this.onMouseDown(e));
@@ -25,17 +24,20 @@ class Ankibookmarklet {
     }
 
     onMouseMove(e) {
-        this.mousepoint = { x: e.clientX, y: e.clientY };
+        this.point = {
+            x: e.clientX,
+            y: e.clientY
+        };
     }
 
     userSelectionChanged(e) {
 
         // wait 500 ms after the last selection change event
-        if (this.selectionEndTimeout) {
-            clearTimeout(this.selectionEndTimeout);
+        if (this.timeout) {
+            clearTimeout(this.timeout);
         }
 
-        this.selectionEndTimeout = setTimeout(function () {
+        this.timeout = setTimeout(function () {
             var selEndEvent = new CustomEvent("selectionend");
             window.dispatchEvent(selEndEvent);
         }, 500);
@@ -44,23 +46,23 @@ class Ankibookmarklet {
     onSelectionEnd(e) {
 
         // reset selection timeout
-        this.selectionEndTimeout = null;
+        this.timeout = null;
 
         const selection = window.getSelection();
         const word = (selection.toString() || '').trim();
-        this.translator.getDefinition(word).then(defs => {
+        this.translator.getTranslation(word).then(defs => {
             var sent = getSentence(word);
             this.noteinfo = {
                 word,
                 defs,
                 sent
             };
-            let content = renderPopup(this.noteinfo)
+            let content = renderPopup(this.noteinfo, this.options)
             this.popup.showNextTo({
-                x: this.mousepoint.x,
-                y: this.mousepoint.y
+                x: this.point.x,
+                y: this.point.y
             }, content);
-        });
+        }).catch(err=>console.log(err));
 
     }
 
@@ -68,10 +70,13 @@ class Ankibookmarklet {
         this.popup.hide();
     }
 
-    onTouchStart(e){
+    onTouchStart(e) {
         this.popup.hide();
         let touch = e.touches[0];
-        this.mousepoint = { x: touch.clientX, y: touch.clientY };
+        this.point = {
+            x: touch.clientX,
+            y: touch.clientY
+        };
     }
 
     onFrameMessage(e) {
