@@ -1,0 +1,29 @@
+{
+  "name": "anki-bookmarklet",
+  "version": "1.0.0",
+  "description": "A simple client based javascript bookmarklet for language learner.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ninja33/anki-bookmarklet.git"
+  },
+  "keywords": [
+    "anki"
+  ],
+  "author": "zhenyu huang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ninja33/anki-bookmarklet/issues"
+  },
+  "homepage": "https://github.com/ninja33/anki-bookmarklet#readme",
+  "devDependencies": {
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb": "^16.1.0"
+  }
+}
