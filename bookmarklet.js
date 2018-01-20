@@ -21,7 +21,7 @@
                 "popup.js",
                 "util.js",
                 "youdao.js",
-                "collins.js",
+                "baicizhan.js",
                 "translator.js",
                 "ankiconnect.js",
                 "ankimobile.js",
