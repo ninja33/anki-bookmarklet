@@ -16,14 +16,10 @@
         s.onload = () => {
             let libs = [
                 "main.css",
-                "lib/jsonp.js",
-                "lib/md5.js",
                 "popup.js",
                 "util.js",
-                "youdao.js",
-                "baicizhan.js",
+                "youdaoec.js",
                 "translator.js",
-                "ankiconnect.js",
                 "ankimobile.js",
                 "main.js"
             ];

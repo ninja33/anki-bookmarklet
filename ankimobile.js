@@ -4,15 +4,15 @@ class Ankimobile {
         this.noteinfo = {};
     }
 
-    addNote(options, noteinfo) {
+    addNote(note, options) {
         for(let key in options) {
             options[key] = encodeURI(options[key]);
         }
 
-        for(let key in noteinfo) {
-            noteinfo[key] = encodeURI(noteinfo[key]);
+        for(let key in note) {
+            note[key] = encodeURI(note[key]);
         }
-        let ankiNote = `anki://x-callback-url/addnote?profile=${encodeURI('User 1')}&deck=${options.deck}&type=${options.type}&fld${options.word}=${noteinfo.word}&fld${options.defs}=${noteinfo.defs}&fld${options.sent}=${noteinfo.sent}&tags=ankimobiledupes=1`;
+        let ankiNote = `anki://x-callback-url/addnote?profile=${encodeURI('User 1')}&deck=${options.deck}&type=${options.type}&fld${options.word}=${note.expression}&fld${options.defs}=${note.definition}&fld${options.sent}=${note.sentence}&tags=ankimobiledupes=1`;
 
         window.open(ankiNote, '_blank');
     }

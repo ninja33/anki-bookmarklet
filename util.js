@@ -51,7 +51,7 @@ function getBlock(node, deep) {
 
 function cutSentence(word, sentence) {
     var autocut = true;
-    var sentenceNum = 3;
+    var sentenceNum = 1;
 
     if (autocut && sentenceNum > 0) {
         let puncts = sentence.match(/[\.\?!;]/g) || [];
@@ -103,35 +103,11 @@ function getSentence(word) {
     return cutSentence(word, wordContent);
 }
 
-function renderPopup(noteinfo, option = defaultOptions()) {
-    let {
-        word,
-        defs,
-        sent
-    } = noteinfo;
-    let base = option.base;
-    var content = `\
-    <html lang="zh-CN">\
-        <head><meta charset="UTF-8"><title></title>\
-            <link rel="stylesheet" href="${base}frame.css">\
-        </head>\
-        <body style="margin:3px;">\
-        <div class="abkl-content">\
-            <div class="abkl-sect abkl-word">${word}<span class="abkl-addnote"><img src="${base}img/add.png"/></span></div>\
-            <div class="abkl-sect abkl-defs">${defs}</div>\
-            <div class="abkl-sect abkl-sent">${sent}</div>\
-        </div>\
-        <script src="${base}frame.js"></script>\
-        </body>\
-    </html>`;
-    return content;
-}
-
 // Polyfill caretRangeFromPoint() using the newer caretPositionFromPoint()
-if (!document.caretRangeFromPoint){
-    document.caretRangeFromPoint = function polyfillcaretRangeFromPoint(x,y){
+if (!document.caretRangeFromPoint) {
+    document.caretRangeFromPoint = function polyfillcaretRangeFromPoint(x, y) {
         let range = document.createRange();
-        let position = document.caretPositionFromPoint(x,y);
+        let position = document.caretPositionFromPoint(x, y);
         if (!position) {
             return null;
         }
@@ -145,7 +121,7 @@ function isiOS() {
     return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 }
 
-function showXY(point){
+function showXY(point) {
     content = content + `<hr>
     <div style="font-size:0.7em">
         point-x:${point.x}/point-y:${point.y}<br>
@@ -153,4 +129,31 @@ function showXY(point){
         pop-w:${popupRect.width}/pop-h:${popupRect.height}<br>
         posX:${posX}/posY:${posY}
     <div>`;
+}
+
+function renderPopup(note, option = defaultOptions()) {
+    return `
+    <html lang="en">
+        <head><meta charset="UTF-8"><title></title>
+            <link rel="stylesheet" href="${option.base}frame.css">
+        </head>
+        ${note.css}
+        <body style="margin:0px;">
+        <div class="odh-notes">
+            <div class="odh-note">
+                <div class="odh-headsection">
+                    <img class="odh-addnote" src="${option.base}img/add.png" />
+                    <span class="odh-expression">${note.expression}</span>
+                    <span class="odh-reading">${note.reading}</span>
+                    <span class="odh-extra">${note.extrainfo}</span>
+                </div>
+                <div class="odh-definition">
+                    ${note.definition}
+                </div>
+            </div>
+            <!--div class="odh-sentence">${note.sentence}</div-->
+        </div>
+        <script src="${option.base}frame.js"></script>\
+        </body>
+    </html>`;
 }

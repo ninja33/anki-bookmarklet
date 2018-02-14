@@ -1,9 +1,0 @@
-{
-    "extends": "eslint:recommended",
-    "env": {
-        "browser": true
-    },
-    "rules": {
-        "linebreak-style":"off"
-    }
-}

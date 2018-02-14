@@ -6,11 +6,11 @@ class Ankibookmarklet {
         x: 0,
         y: 0,
         };
-        this.noteinfo = {};
+        this.note = {};
         this.options = loadOptions();
         this.popup = new Popup();
         this.translator = new Translator();
-        this.target = isiOS() ? new Ankimobile() : new Ankiconnect();
+        this.target = new Ankimobile();
         this.timeout = null;
 
         window.addEventListener('mousemove', e => this.onMouseMove(e));
@@ -51,18 +51,15 @@ class Ankibookmarklet {
 
         const selection = window.getSelection();
         const word = (selection.toString() || '').trim();
-        this.translator.getTranslation(word).then((defs) => {
-        let sent = getSentence(word);
-        this.noteinfo = {
-            word,
-            defs,
-            sent,
-        };
-        const content = renderPopup(this.noteinfo, this.options);
-        this.popup.showNextTo({
-            x: this.point.x,
-            y: this.point.y,
-        }, content);
+        this.translator.getTranslation(word).then((note) => {
+            if (!note) return;
+            note.sentence = getSentence(word);
+            this.note = note;
+            const content = renderPopup(note, this.options);
+            this.popup.showNextTo({
+                x: this.point.x,
+                y: this.point.y,
+            }, content);
         }).catch(err => console.log(err));
 
     }
@@ -81,6 +78,6 @@ class Ankibookmarklet {
     }
 
     onFrameMessage(e) {
-        this.target.addNote(this.options, this.noteinfo);
+        this.target.addNote(this.note, this.options);
     }
 }

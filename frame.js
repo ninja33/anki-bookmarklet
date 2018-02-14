@@ -22,7 +22,7 @@ function hackTagsColor() {
         'phrase.': '#8A8A91'
     };
     
-    [].forEach.call(document.querySelectorAll('.abkl-defs'), function(div) {
+    [].forEach.call(document.querySelectorAll('.odh-definition'), function(div) {
     div.innerHTML = div.innerHTML.replace(/\b[a-z]+\./g, function(symbol) {
             if(colorMap[symbol]) {
                 return `<span class="highlight" style="background-color:${colorMap[symbol]}">${symbol}</span>`;
@@ -36,7 +36,7 @@ function hackTagsColor() {
 
 function onDomContentLoaded() {
     hackTagsColor();
-    document.getElementsByClassName('abkl-addnote')[0].addEventListener('click', () => {
+    document.getElementsByClassName('odh-addnote')[0].addEventListener('click', () => {
         window.parent.postMessage({action: 'addNote', params: {}}, '*');
     });
 }

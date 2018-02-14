@@ -2,7 +2,7 @@ class Translator {
     constructor() {
         this.word = "";
         this.defs = {};
-        this.dictionary = new Baicizhan();
+        this.dictionary = new YoudaoEC();
     }
 
     isEmpty() {
@@ -23,8 +23,8 @@ class Translator {
         return (this.isEmpty() || this.isShortandNum() || !this.isEnglish());
     }
 
-    getTranslation(word) {
+    async getTranslation(word) {
         this.word = word;
-        return this.isInvalid() ? Promise.reject("invalid word") : this.dictionary.findTerm(word);
+        return this.isInvalid() ? Promise.reject("invalid word") : await this.dictionary.findTerm(word);
     }
 }
